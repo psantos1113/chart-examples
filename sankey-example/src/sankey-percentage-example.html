@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      const start_node = ' ';
+
+        function createDataRows(values) {
+            const dataRows = [];
+            values.forEach(element => {
+                dataRows.push([ start_node, element.toString() , element ]);
+            });
+
+            return dataRows;
+        }
+        
+        function createGermanyDataRows() {
+            return this.createDataRows([ 31, 20, 22, 8, 19 ]);
+        }
+
+        function createIsraelDataRows() {
+            return this.createDataRows([ 29, 39, 19, 12, 1 ]);
+        }
+        function createUKDataRows() {
+            return this.createDataRows([ 47, 25, 11, 12, 5 ]);
+        }
+        function createFranceDataRows() {
+            return this.createDataRows([ 69, 10, 13, 1, 7 ]);
+        }
+
+        function createUSDataRows() {
+            return this.createDataRows([ 78, 6, 14, 2 ]);
+        }
+
+        function createChinaDataRows() {
+            return this.createDataRows([ 79, 8, 1.8, 11, 0.2 ]);
+        }
+
+        function createJapanDataRows() {
+            return this.createDataRows([ 6, 27, 3, 63, 1 ]);
+        }
+
+        function createDataObject(dataRows) {
+            const data = new google.visualization.DataTable();
+            data.addColumn('string', 'From');
+            data.addColumn('string', 'To');
+            data.addColumn('number', 'Amount');
+            data.addRows(dataRows);
+            return data;
+        }
+
+        function drawChart(elementId, dataRows, colors) {
+            const data = this.createDataObject(dataRows);
+            const options = {
+                width: 300,
+                height: 300,
+                sankey: {
+                    node: {
+                        colors: colors,
+                        label: {
+                            fontName: 'Times-Roman',
+                            fontSize: '14',
+                            bold: true,
+                            italic: true
+                        },
+                        nodePadding: 20
+                    },
+                    link: {
+                        colorMode: 'gradient',
+                        colors: colors
+                    }
+                }
+            };
+
+            const chart = new google.visualization.Sankey(document.getElementById(elementId));
+            chart.draw(data, options);
+        }
+
+        function drawCharts() {
+            const germanyColors = ['#eefa05', '#eefa05', '#4285f4', '#a1c100', '#f7052d', '#00ffff'];
+            const israelColors = ['#c16d00', '#c16d00', '#4285f4', '#a1c100', '#f7052d', '#00ffff'];
+            const ukColors = ['#00c11a', '#00c11a', '#4285f4', '#a1c100', '#f7052d', '#00ffff'];
+            const franceColors = ['#c1008e', '#c1008e', '#4285f4', '#a1c100', '#f7052d', '#00ffff'];
+            const usColors = ['#4285f4', '#4285f4', '#a1c100', '#f7052d', '#00ffff'];
+            const chinaColors = ['#f4b400', '#4285f4', '#4285f4', '#a1c100', '#f7052d', '#00ffff'];
+            const japanColors = ['#00acc1', '#4285f4', '#4285f4', '#a1c100', '#f7052d', '#00ffff'];
+            this.drawChart('sankey_germany', this.createGermanyDataRows(), germanyColors);
+            this.drawChart('sankey_israel', this.createIsraelDataRows(), israelColors);
+            this.drawChart('sankey_uk', this.createUKDataRows(), ukColors);
+            this.drawChart('sankey_france', this.createFranceDataRows(), franceColors);
+            this.drawChart('sankey_usa', this.createUSDataRows(), usColors);
+            this.drawChart('sankey_china', this.createChinaDataRows(), chinaColors);
+            this.drawChart('sankey_japan', this.createJapanDataRows(), japanColors);
+        }
+
+        google.charts.load('current', {'packages':['sankey']});
+        google.charts.setOnLoadCallback(drawCharts);
+    </script>
+  </head>
+  <body>
+    <div id="sankey_germany" style="width: 700px; height: 400px;"></div>
+    <div id="sankey_israel" style="width: 700px; height: 400px;"></div>
+    <div id="sankey_uk" style="width: 700px; height: 400px;"></div>
+    <div id="sankey_france" style="width: 700px; height: 400px;"></div>
+    <div id="sankey_usa" style="width: 700px; height: 400px;"></div>
+    <div id="sankey_china" style="width: 700px; height: 400px;"></div>
+    <div id="sankey_japan" style="width: 700px; height: 400px;"></div>
+  </body>
+</html>
